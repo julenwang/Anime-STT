@@ -2,6 +2,7 @@ import os
 from os import path
 import subprocess
 import argparse
+import time
 from faster_whisper import WhisperModel
 
 model_size = "medium"
@@ -78,6 +79,8 @@ def clean_up(files):
         os.remove(file)
 
 def subtitle_stt(file_path):
+    start_time = time.time()
+
     print(f"--- extract audio ---")
     audio_path = extract_to_acc(file_path)
 
@@ -93,6 +96,9 @@ def subtitle_stt(file_path):
 
     print(f"--- clean up ---")
     clean_up([audio_path])
+
+    end_time = time.time()
+    print(f"代码执行时间: {end_time - start_time:.6f}s")
 
 def main(directories):
     allowed_video_suffix = (".mp4", ".mkv")
